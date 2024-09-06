@@ -14,45 +14,48 @@
             <h2>1. JavaScript Async</h2>
             <p>
                 Asynchronous programming in JavaScript allows code to execute without blocking the main thread. 
-                This is crucial for handling operations that might take some time, such as fetching data from a server 
-                or reading a file.
+                This example simulates loading different parts of a webpage asynchronously.
             </p>
             <div class="code-box">
                 <pre><code>
-console.log("Start");
-setTimeout(() => {
-    console.log("This is async!");
-}, 1000);
-console.log("End");
+console.log("Start loading page");
+setTimeout(() => console.log("Images loaded"), 2000);
+setTimeout(() => console.log("Content loaded"), 1000);
+console.log("End of script");
                 </code></pre>
             </div>
             <div class="demo-box">
-                <button id="asyncBtn" class="btn">Run Async Example</button>
-                <div id="asyncOutput" class="output"></div>
+                <button id="asyncBtn" class="btn">Load Page</button>
+                <div id="asyncOutput" class="output">
+                    <div id="pageStructure" style="display: none;">Page Structure</div>
+                    <div id="pageContent" style="display: none;">Page Content</div>
+                    <div id="pageImages" style="display: none;">Images</div>
+                </div>
             </div>
         </section>
 
         <section id="callback">
             <h2>2. Callback</h2>
             <p>
-                Callbacks are functions passed as arguments to other functions, which are then invoked inside the outer function 
-                to complete an action. They're a fundamental part of asynchronous programming in JavaScript.
+                Callbacks are functions passed as arguments to other functions, allowing you to execute code after an asynchronous operation completes.
+                This example simulates a database query using callbacks.
             </p>
             <div class="code-box">
                 <pre><code>
-function fetchData(callback) {
+function queryDatabase(query, callback) {
     setTimeout(() => {
-        callback("Data fetched!");
-    }, 1500);
+        const result = { id: 1, name: "John Doe" };
+        callback(result);
+    }, 2000);
 }
 
-fetchData((result) => {
-    console.log(result);
+queryDatabase("SELECT * FROM users", (result) => {
+    console.log("User:", result.name);
 });
                 </code></pre>
             </div>
             <div class="demo-box">
-                <button id="callbackBtn" class="btn">Run Callback Example</button>
+                <button id="callbackBtn" class="btn">Query Database</button>
                 <div id="callbackOutput" class="output"></div>
             </div>
         </section>
@@ -60,26 +63,26 @@ fetchData((result) => {
         <section id="promise">
             <h2>3. Promise</h2>
             <p>
-                Promises provide a cleaner way to handle asynchronous operations. They represent a value that may not be 
-                available immediately but will be resolved at some point in the future.
+                Promises provide a cleaner way to handle asynchronous operations. This example simulates fetching weather data using a Promise.
             </p>
             <div class="code-box">
                 <pre><code>
-function fetchDataPromise() {
+function fetchWeather() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve("Data fetched with Promise!");
-        }, 1500);
+            const weather = { temp: 72, condition: "Sunny" };
+            resolve(weather);
+        }, 2000);
     });
 }
 
-fetchDataPromise().then((result) => {
-    console.log(result);
-});
+fetchWeather()
+    .then(weather => console.log(`Temperature: ${weather.temp}°F, Condition: ${weather.condition}`))
+    .catch(error => console.error("Failed to fetch weather"));
                 </code></pre>
             </div>
             <div class="demo-box">
-                <button id="promiseBtn" class="btn">Run Promise Example</button>
+                <button id="promiseBtn" class="btn">Fetch Weather</button>
                 <div id="promiseOutput" class="output"></div>
             </div>
         </section>
@@ -87,29 +90,26 @@ fetchDataPromise().then((result) => {
         <section id="async-await">
             <h2>4. Async/Await</h2>
             <p>
-                Async/Await is syntactic sugar built on top of Promises, making asynchronous code look and behave more 
-                like synchronous code. It makes asynchronous code more readable and easier to reason about.
+                Async/Await makes asynchronous code look and behave more like synchronous code. This example simulates a multi-step process of ordering a product.
             </p>
             <div class="code-box">
                 <pre><code>
-async function fetchDataAsync() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve("Data fetched with Async/Await!");
-        }, 1500);
-    });
+async function orderProduct(productId) {
+    try {
+        const product = await fetchProduct(productId);
+        const order = await createOrder(product);
+        const shipment = await shipOrder(order);
+        return `Order ${shipment.id} shipped to ${shipment.address}`;
+    } catch (error) {
+        return `Error: ${error.message}`;
+    }
 }
 
-async function getData() {
-    const result = await fetchDataAsync();
-    console.log(result);
-}
-
-getData();
+orderProduct(123).then(result => console.log(result));
                 </code></pre>
             </div>
             <div class="demo-box">
-                <button id="asyncAwaitBtn" class="btn">Run Async/Await Example</button>
+                <button id="asyncAwaitBtn" class="btn">Order Product</button>
                 <div id="asyncAwaitOutput" class="output"></div>
             </div>
         </section>
@@ -117,20 +117,34 @@ getData();
         <section id="event-loop">
             <h2>5. Event Loop</h2>
             <p>
-                The Event Loop is a crucial part of JavaScript's concurrency model. It's responsible for executing code, 
-                collecting and processing events, and executing queued sub-tasks. It allows JavaScript to perform non-blocking operations.
+                The Event Loop manages the execution of code, handling asynchronous callbacks, and maintaining the order of operations.
+                This example visualizes how different types of tasks are processed.
             </p>
             <div class="code-box">
                 <pre><code>
-console.log('1');
-setTimeout(() => console.log('2'), 0);
-Promise.resolve().then(() => console.log('3'));
-console.log('4');
+console.log("1. Synchronous task");
+setTimeout(() => console.log("4. Timer callback"), 0);
+Promise.resolve().then(() => console.log("3. Microtask"));
+console.log("2. Synchronous task");
                 </code></pre>
             </div>
             <div class="demo-box">
-                <button id="eventLoopBtn" class="btn">Run Event Loop Example</button>
+                <button id="eventLoopBtn" class="btn">Run Event Loop</button>
                 <div id="eventLoopOutput" class="output"></div>
+                <div id="eventLoopVisual" class="event-loop-visual">
+                    <div class="task-queue">
+                        <h4>Task Queue</h4>
+                        <div id="taskQueue"></div>
+                    </div>
+                    <div class="microtask-queue">
+                        <h4>Microtask Queue</h4>
+                        <div id="microtaskQueue"></div>
+                    </div>
+                    <div class="call-stack">
+                        <h4>Call Stack</h4>
+                        <div id="callStack"></div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
