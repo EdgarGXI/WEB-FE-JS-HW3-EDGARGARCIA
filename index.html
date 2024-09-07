@@ -13,8 +13,10 @@
         <section id="async">
             <h2>1. JavaScript Async</h2>
             <p>
-                Asynchronous programming in JavaScript allows code to execute without blocking the main thread. 
-                This example simulates loading different parts of a webpage asynchronously.
+                "Async" in JavaScript refers to operations that happen independently of the main program flow, allowing the program to continue running while waiting for the completion of these operations. JavaScript is single-threaded, meaning it executes one command at a time, but it can handle asynchronous tasks like network requests, timers, or file reading, without blocking the execution of other code.
+            </p>
+            <p>
+                Asynchronous programming in JavaScript allows code to execute without blocking the main thread. This example simulates loading different parts of a webpage asynchronously.
             </p>
             <div class="code-box">
                 <pre><code>
@@ -37,9 +39,16 @@ console.log("End of script");
         <section id="callback">
             <h2>2. Callback</h2>
             <p>
-                Callbacks are functions passed as arguments to other functions, allowing you to execute code after an asynchronous operation completes.
-                This example simulates a database query using callbacks.
+                A callback is a function passed as an argument to another function and is executed after the completion of an asynchronous operation. Callbacks have been a traditional way to handle async code in JavaScript.
             </p>
+            <p>
+                Callbacks are functions passed as arguments to other functions, allowing you to execute code after an asynchronous operation completes. This example simulates a database query using callbacks.
+            </p>
+            <p><strong>Problems with Callbacks:</strong></p>
+            <ul>
+                <li><strong>Callback Hell:</strong> Nesting multiple callbacks can make the code hard to read and maintain.</li>
+                <li><strong>Error Handling:</strong> Managing errors across multiple callbacks can become cumbersome.</li>
+            </ul>
             <div class="code-box">
                 <pre><code>
 function queryDatabase(query, callback) {
@@ -63,8 +72,22 @@ queryDatabase("SELECT * FROM users", (result) => {
         <section id="promise">
             <h2>3. Promise</h2>
             <p>
+                A promise is an object representing the eventual completion (or failure) of an asynchronous operation and its resulting value. Promises provide a more structured and manageable way to handle async code compared to callbacks.
+            </p>
+            <p>
                 Promises provide a cleaner way to handle asynchronous operations. This example simulates fetching weather data using a Promise.
             </p>
+            <p><strong>Promises can be in one of three states:</strong></p>
+            <ul>
+                <li><strong>Pending:</strong> Initial state, neither fulfilled nor rejected.</li>
+                <li><strong>Fulfilled:</strong> Operation completed successfully.</li>
+                <li><strong>Rejected:</strong> Operation failed.</li>
+            </ul>
+            <p><strong>Advantages of Promises:</strong></p>
+            <ul>
+                <li><strong>Chaining:</strong> Promises can be chained to handle multiple async operations in sequence.</li>
+                <li><strong>Error Handling:</strong> Errors are handled in a more consistent way using <code>.catch()</code>.</li>
+            </ul>
             <div class="code-box">
                 <pre><code>
 function fetchWeather() {
@@ -90,8 +113,18 @@ fetchWeather()
         <section id="async-await">
             <h2>4. Async/Await</h2>
             <p>
+                <code>async</code> and <code>await</code> are syntactic sugar built on top of promises that allow writing asynchronous code in a more synchronous and readable manner.
+            </p>
+            <p>
                 Async/Await makes asynchronous code look and behave more like synchronous code. This example simulates a multi-step process of ordering a product.
             </p>
+            <p><strong><code>async</code>:</strong> Declares a function that returns a promise.</p>
+            <p><strong><code>await</code>:</strong> Pauses the execution of the <code>async</code> function until the promise is settled (resolved or rejected).</p>
+            <p><strong>Advantages of Async/Await:</strong></p>
+            <ul>
+                <li><strong>Simplified Syntax:</strong> Easier to write and understand, especially for complex sequences of async operations.</li>
+                <li><strong>Error Handling:</strong> Errors can be caught using <code>try/catch</code> blocks, making error management more straightforward.</li>
+            </ul>
             <div class="code-box">
                 <pre><code>
 async function orderProduct(productId) {
@@ -117,9 +150,17 @@ orderProduct(123).then(result => console.log(result));
         <section id="event-loop">
             <h2>5. Event Loop</h2>
             <p>
-                The Event Loop manages the execution of code, handling asynchronous callbacks, and maintaining the order of operations.
-                This example visualizes how different types of tasks are processed.
+                The Event Loop is a core mechanism in JavaScript that handles asynchronous operations. It continuously checks the call stack (where the code is executed) and the callback queue (where asynchronous callbacks are queued).
             </p>
+            <p>
+                The Event Loop manages the execution of code, handling asynchronous callbacks, and maintaining the order of operations. This example visualizes how different types of tasks are processed.
+            </p>
+            <p><strong>The Event Loop ensures that the JavaScript engine executes the code in the proper order:</strong></p>
+            <ol>
+                <li>Executes all synchronous code on the call stack.</li>
+                <li>Processes microtasks in the microtask queue (promises).</li>
+                <li>Processes tasks in the callback queue.</li>
+            </ol>
             <div class="code-box">
                 <pre><code>
 console.log("1. Synchronous task");

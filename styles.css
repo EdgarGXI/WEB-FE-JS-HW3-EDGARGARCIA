@@ -112,3 +112,11 @@ section {
     padding: 5px;
     border-radius: 3px;
 }
+
+body {
+    background-color: #000000;
+    opacity: 1;
+    background-image:  linear-gradient(30deg, #3498db 12%, transparent 12.5%, transparent 87%, #3498db 87.5%, #3498db), linear-gradient(150deg, #3498db 12%, transparent 12.5%, transparent 87%, #3498db 87.5%, #3498db), linear-gradient(30deg, #3498db 12%, transparent 12.5%, transparent 87%, #3498db 87.5%, #3498db), linear-gradient(150deg, #3498db 12%, transparent 12.5%, transparent 87%, #3498db 87.5%, #3498db), linear-gradient(60deg, #3498db77 25%, transparent 25.5%, transparent 75%, #3498db77 75%, #3498db77), linear-gradient(60deg, #3498db77 25%, transparent 25.5%, transparent 75%, #3498db77 75%, #3498db77);
+    background-size: 32px 56px;
+    background-position: 0 0, 0 0, 16px 28px, 16px 28px, 0 0, 16px 28px;
+}
